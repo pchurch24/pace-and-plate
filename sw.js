@@ -1,5 +1,5 @@
 // Keeps Pace & Plate opening when you have no signal (the gym).
-const CACHE = "pace-and-plate-v5";
+const CACHE = "pace-and-plate-v7";
 self.addEventListener("install", (e) => {
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(["./", "./index.html", "./manifest.webmanifest", "./icon-192.png"])).catch(() => {}));
@@ -15,7 +15,7 @@ self.addEventListener("fetch", (e) => {
   // Pages: try the network first so updates arrive, fall back to the saved copy offline.
   if (same && (req.mode === "navigate" || url.pathname.endsWith("/") || url.pathname.endsWith("index.html"))) {
     e.respondWith(
-      fetch(req).then((r) => { const copy = r.clone(); caches.open(CACHE).then((c) => c.put("./index.html", copy)); return r; })
+      fetch(req, { cache: "no-cache" }).then((r) => { const copy = r.clone(); caches.open(CACHE).then((c) => c.put("./index.html", copy)); return r; })
         .catch(() => caches.match("./index.html").then((r) => r || caches.match("./")))
     );
     return;
