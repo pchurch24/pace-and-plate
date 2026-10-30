@@ -1,5 +1,5 @@
 // Keeps Pace & Plate opening when you have no signal (the gym).
-const CACHE = "pace-and-plate-v14";
+const CACHE = "pace-and-plate-v16";
 self.addEventListener("install", (e) => {
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(["./", "./index.html", "./manifest.webmanifest", "./icon-192.png"])).catch(() => {}));
